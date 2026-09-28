@@ -37,7 +37,7 @@ export default function HistoryEntry({ entry, onEdit, onDelete, compact = false 
     ['Study', `${entry.learningMinutes} min`],
     ['Social media', formatMinutes(entry.screenTime.socialMediaMinutes)],
     ['Screen time', formatMinutes(entry.screenTime.totalMinutes)],
-    ['Exercise', entry.exercise ? 'Yes' : 'No'],
+    ['Exercise', entry.exerciseLevel === 'faceYoga' ? 'Face Yoga' : entry.exerciseLevel === 'workout' ? 'Workout' : entry.exerciseLevel === 'fullExercise' || entry.exercise ? 'Full Exercise' : 'No'],
   ];
 
   return (

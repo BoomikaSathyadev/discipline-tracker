@@ -17,8 +17,8 @@ function blank(date: string): PartialEntry {
     date,
     sleep: { bedtime: '00:00', wakeTime: '00:00', durationHours: 0 },
     screenTime: { totalMinutes: 0, socialMediaMinutes: 0 },
-    steps: 0, exercise: false, learningMinutes: 0, learningTopic: '',
-    habits: { wokeUpOnTime: false, completedMainTask: false, keptOrganized: false, limitedSocialMedia: false, followedRoutine: false, readBook: false },
+    steps: 0, exercise: false, exerciseLevel: 'none', learningMinutes: 0, learningTopic: '',
+    habits: { wokeUpOnTime: false, completedMainTask: false, keptOrganized: false, limitedSocialMedia: false, followedRoutine: false, readBook: false, drankWater: false, noAddedSugar: false },
     mood: 0, dayRating: 0, note: '',
   };
 }
@@ -30,6 +30,8 @@ const habits = [
   { key: 'limitedSocialMedia' as const, label: 'Limited social media' },
   { key: 'readBook' as const,           label: 'Read a book' },
   { key: 'followedRoutine' as const,    label: 'Followed my routine' },
+  { key: 'drankWater' as const,         label: 'Drank 2–2.5L Water' },
+  { key: 'noAddedSugar' as const,       label: 'No Added Sugar' },
 ];
 
 export default function CheckInForm({ date, existing, onSave }: Props) {
@@ -107,16 +109,24 @@ export default function CheckInForm({ date, existing, onSave }: Props) {
         <div className="grid grid-cols-2 gap-2">
           <Field label="Steps"><input type="number" min="0" step="100" value={form.steps || ''} placeholder="0" onChange={e => set('steps', +e.target.value)} /></Field>
           <Field label="Exercise">
-            <button type="button" onClick={() => set('exercise', !form.exercise)}
-              className="w-full transition-colors"
-              style={{
-                padding: '11px 13px', borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: 'pointer',
-                background: form.exercise ? '#1a1a1a' : '#fff',
-                color: form.exercise ? '#fff' : '#a3a3a3',
-                border: `1.5px solid ${form.exercise ? '#1a1a1a' : '#e5e5e3'}`,
-              }}>
-              {form.exercise ? 'Done ✓' : 'Not yet'}
-            </button>
+            <div className="flex flex-col gap-1.5">
+              {([
+                ['faceYoga', 'Face Yoga'],
+                ['workout', 'Workout'],
+                ['fullExercise', 'Full Exercise'],
+              ] as const).map(([level, label]) => {
+                const selected = (form.exerciseLevel ?? (form.exercise ? 'fullExercise' : 'none')) === level;
+                return (
+                  <button key={level} type="button"
+                    onClick={() => { const exerciseLevel = selected ? 'none' : level; set('exerciseLevel', exerciseLevel); set('exercise', exerciseLevel !== 'none'); }}
+                    aria-pressed={selected}
+                    className="w-full transition-colors"
+                    style={{ padding: '8px 10px', borderRadius: 10, fontSize: 13, fontWeight: 600, cursor: 'pointer', background: selected ? '#1a1a1a' : '#fff', color: selected ? '#fff' : '#737373', border: `1.5px solid ${selected ? '#1a1a1a' : '#e5e5e3'}` }}>
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
           </Field>
         </div>
       </Section>
@@ -148,6 +158,7 @@ export default function CheckInForm({ date, existing, onSave }: Props) {
               </label>
             );
           })}
+          <p className="text-xs text-neutral-400 mt-2">Avoid added/free sugars; whole fruit and plain milk are okay.</p>
         </div>
       </Section>
 

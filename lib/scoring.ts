@@ -19,8 +19,11 @@ export function calculateScore(entry: PartialEntry): ScoreBreakdown {
   items.push({ label: 'Followed planned routine', earned: entry.habits.followedRoutine ? habitPoints : 0, max: habitPoints });
   items.push({ label: 'Read a book', earned: (entry.habits.readBook ?? false) ? habitPoints : 0, max: habitPoints });
 
-  // Exercise (13 pts)
-  items.push({ label: 'Exercise completed', earned: entry.exercise ? 13 : 0, max: 13 });
+  // Exercise (13 pts, graduated by level)
+  const exerciseLevel = entry.exerciseLevel ?? (entry.exercise ? 'fullExercise' : 'none');
+  const exercisePoints = { none: 0, faceYoga: 5, workout: 9, fullExercise: 13 }[exerciseLevel];
+  const exerciseLabels = { none: 'Exercise', faceYoga: 'Face Yoga', workout: 'Workout', fullExercise: 'Full Exercise' };
+  items.push({ label: exerciseLabels[exerciseLevel], earned: exercisePoints, max: 13 });
 
   // Learning (15 pts) — full points for 30+ min
   const learnPts = Math.min(15, Math.round((entry.learningMinutes / 30) * 15));

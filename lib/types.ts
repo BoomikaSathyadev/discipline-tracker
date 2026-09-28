@@ -16,7 +16,11 @@ export interface HabitsData {
   limitedSocialMedia: boolean;
   followedRoutine: boolean;
   readBook: boolean;
+  drankWater: boolean;
+  noAddedSugar: boolean;
 }
+
+export type ExerciseLevel = 'none' | 'faceYoga' | 'workout' | 'fullExercise';
 
 export interface DailyEntry {
   date: string; // YYYY-MM-DD
@@ -24,6 +28,7 @@ export interface DailyEntry {
   screenTime: ScreenTimeData;
   steps: number;
   exercise: boolean;
+  exerciseLevel?: ExerciseLevel;
   learningMinutes: number;
   learningTopic: string;
   habits: HabitsData;
