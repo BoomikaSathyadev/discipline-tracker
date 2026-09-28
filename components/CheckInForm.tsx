@@ -106,10 +106,10 @@ export default function CheckInForm({ date, existing, onSave }: Props) {
 
       {/* Activity */}
       <Section label="Physical activity">
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 gap-3">
           <Field label="Steps"><input type="number" min="0" step="100" value={form.steps || ''} placeholder="0" onChange={e => set('steps', +e.target.value)} /></Field>
           <Field label="Exercise">
-            <div className="flex flex-col gap-1.5">
+            <div className="flex gap-1.5">
               {([
                 ['faceYoga', 'Face Yoga'],
                 ['workout', 'Workout'],
@@ -120,7 +120,7 @@ export default function CheckInForm({ date, existing, onSave }: Props) {
                   <button key={level} type="button"
                     onClick={() => { const exerciseLevel = selected ? 'none' : level; set('exerciseLevel', exerciseLevel); set('exercise', exerciseLevel !== 'none'); }}
                     aria-pressed={selected}
-                    className="w-full transition-colors"
+                    className="flex-1 transition-colors"
                     style={{ padding: '8px 10px', borderRadius: 10, fontSize: 13, fontWeight: 600, cursor: 'pointer', background: selected ? '#1a1a1a' : '#fff', color: selected ? '#fff' : '#737373', border: `1.5px solid ${selected ? '#1a1a1a' : '#e5e5e3'}` }}>
                     {label}
                   </button>
