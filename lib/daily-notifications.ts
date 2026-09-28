@@ -4,6 +4,33 @@ import { createClient } from './supabase';
 
 export type DailyNotificationState = 'enabled' | 'disabled' | 'denied' | 'unsupported';
 
+export function dailyNotificationErrorMessage(error: unknown): string {
+  const details = error as { code?: unknown; message?: unknown; name?: unknown };
+  const code = typeof details?.code === 'string' ? details.code : '';
+  const message = typeof details?.message === 'string' ? details.message : '';
+  const name = typeof details?.name === 'string' ? details.name : '';
+
+  if (message.includes('NEXT_PUBLIC_VAPID_PUBLIC_KEY is not configured')) {
+    return 'Vercel is missing NEXT_PUBLIC_VAPID_PUBLIC_KEY. Set it to the VAPID public key and redeploy.';
+  }
+  if (message.includes('Authentication is required')) {
+    return 'Your Discipline Tracker session has expired. Sign in again, then enable the reminder.';
+  }
+  if (code === 'PGRST205' || (message.includes('daily_notification_subscriptions') && /schema cache|could not find/i.test(message))) {
+    return 'The Supabase notification table is unavailable. Run the notification migration with supabase db push.';
+  }
+  if (code === '42501' || /row-level security|permission denied/i.test(message)) {
+    return 'Supabase rejected the subscription under RLS. Verify the notification table migration and user policy.';
+  }
+  if (name === 'InvalidAccessError') {
+    return 'The VAPID public key is invalid or does not match the key configured in Supabase.';
+  }
+  if (name === 'NotAllowedError') {
+    return 'Chrome blocked push subscription. Allow notifications for Discipline Tracker in Android settings.';
+  }
+  return 'Could not update the reminder. Check that the VAPID key and Supabase notification migration are configured.';
+}
+
 function getTimeZone() {
   return Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
 }

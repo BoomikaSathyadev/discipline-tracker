@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import {
   DailyNotificationState,
+  dailyNotificationErrorMessage,
   disableDailyNotifications,
   enableDailyNotifications,
   loadDailyNotificationState,
@@ -13,13 +14,18 @@ type SettingState = DailyNotificationState | 'loading' | 'error';
 export default function DailyNotificationSetting() {
   const [state, setState] = useState<SettingState>('loading');
   const [busy, setBusy] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    loadDailyNotificationState().then(setState).catch(() => setState('error'));
+    loadDailyNotificationState().then(setState).catch(error => {
+      setErrorMessage(dailyNotificationErrorMessage(error));
+      setState('error');
+    });
   }, []);
 
   async function toggleReminder() {
     setBusy(true);
+    setErrorMessage('');
     try {
       if (state === 'enabled') {
         await disableDailyNotifications();
@@ -27,7 +33,8 @@ export default function DailyNotificationSetting() {
       } else {
         setState(await enableDailyNotifications());
       }
-    } catch {
+    } catch (error) {
+      setErrorMessage(dailyNotificationErrorMessage(error));
       setState('error');
     } finally {
       setBusy(false);
@@ -42,7 +49,7 @@ export default function DailyNotificationSetting() {
       : state === 'unsupported'
         ? 'Push notifications are not supported by this browser.'
         : state === 'error'
-          ? 'Could not update the reminder. Please try again.'
+          ? errorMessage
           : state === 'loading'
             ? 'Checking reminder status…'
             : 'Daily Check-in Reminder · 8:00 PM local time';
