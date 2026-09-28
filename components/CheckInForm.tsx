@@ -98,9 +98,6 @@ export default function CheckInForm({ date, existing, onSave }: Props) {
           <Field label="Total screen time">
             <DurationPicker value={form.screenTime.totalMinutes} onChange={v => set('screenTime', { ...form.screenTime, totalMinutes: v })} />
           </Field>
-          <Field label="Social media">
-            <DurationPicker value={form.screenTime.socialMediaMinutes} onChange={v => set('screenTime', { ...form.screenTime, socialMediaMinutes: v })} />
-          </Field>
         </div>
       </Section>
 

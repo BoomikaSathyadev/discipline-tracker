@@ -78,7 +78,7 @@ Deno.serve(async request => {
     } catch {
       continue;
     }
-    if (localTime.hour !== '21' || localTime.minute !== '45' || row.last_sent_local_date === localTime.date) continue;
+    if (localTime.hour !== '20' || localTime.minute !== '00' || row.last_sent_local_date === localTime.date) continue;
 
     const subscription: PushSubscriptionData = {
       endpoint: row.endpoint,

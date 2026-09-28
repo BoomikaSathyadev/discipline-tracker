@@ -43,7 +43,7 @@ export default function DailyNotificationSetting() {
 
   const unavailable = state === 'unsupported' || state === 'denied';
   const status = state === 'enabled'
-    ? 'Scheduled daily for 9:45 PM local time.'
+    ? 'Scheduled daily for 8:00 PM local time.'
     : state === 'denied'
       ? 'Notifications are blocked. Allow them in Android app settings to enable this reminder.'
       : state === 'unsupported'
@@ -52,13 +52,13 @@ export default function DailyNotificationSetting() {
           ? errorMessage
           : state === 'loading'
             ? 'Checking reminder status…'
-            : 'Daily Check-in Reminder · 9:45 PM local time';
+            : 'Daily Check-in Reminder · 8:00 PM local time';
 
   return (
     <div className="bg-white rounded-2xl p-4 space-y-3" style={{ border: '1px solid #e5e5e3' }}>
       <div>
         <p className="text-sm font-semibold text-neutral-800">Daily Check-in Reminder</p>
-        <p className="text-xs text-neutral-400 mt-0.5">Scheduled for 9:45 PM in your local time zone.</p>
+        <p className="text-xs text-neutral-400 mt-0.5">Scheduled for 8:00 PM in your local time zone.</p>
       </div>
       <button type="button" onClick={toggleReminder} disabled={busy || state === 'loading' || unavailable}
         className="w-full py-2.5 rounded-xl text-sm font-semibold cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"

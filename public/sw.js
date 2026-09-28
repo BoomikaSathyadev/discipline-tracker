@@ -20,17 +20,24 @@ self.addEventListener('push', (event) => {
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  const target = new URL('/today', self.location.origin).href;
+  const notificationUrl = event.notification.data?.url;
+  const targetUrl = new URL(
+    typeof notificationUrl === 'string' ? notificationUrl : '/today',
+    self.location.origin,
+  );
+  const target = targetUrl.origin === self.location.origin
+    ? targetUrl.href
+    : new URL('/today', self.location.origin).href;
 
   event.waitUntil((async () => {
     const windows = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
-    const appWindow = windows.find(client => client.url.startsWith(self.location.origin));
+    const appWindow = windows.find(client => new URL(client.url).origin === self.location.origin);
     if (appWindow) {
       try {
-        await appWindow.navigate(target);
-        return await appWindow.focus();
+        const navigatedWindow = await appWindow.navigate(target);
+        if (navigatedWindow) return await navigatedWindow.focus();
       } catch {
-        // Fall through and open a new app window if the existing one closed.
+        // Fall through and open the app if the existing window cannot navigate.
       }
     }
     return self.clients.openWindow(target);
