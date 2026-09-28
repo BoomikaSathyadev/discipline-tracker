@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { clearAllData } from '@/lib/storage';
 import { createClient } from '@/lib/supabase';
+import DailyNotificationSetting from '@/components/DailyNotificationSetting';
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -41,6 +42,8 @@ export default function SettingsPage() {
       )}
 
       <div className="space-y-2.5">
+        <DailyNotificationSetting />
+
         <SettingCard title="Clear All Data" description="Permanently delete all check-in entries. This cannot be undone.">
           {confirmClear ? (
             <div className="flex gap-2">
