@@ -40,7 +40,7 @@
    select vault.create_secret('<the same CRON_SECRET>', 'daily_checkin_cron_secret');
    ```
 
-7. Schedule the function once per minute. The function checks each active subscription's IANA time zone and sends only during its local 8:00 PM minute:
+7. Schedule the function once per minute. The function checks each active subscription's IANA time zone and sends only during its local 9:45 PM minute:
 
    ```sql
    select cron.schedule(
@@ -64,4 +64,4 @@
 
 Install/open the app from Chrome on Android, sign in, open Settings, and tap **Enable reminder**. Accept Chrome's notification permission prompt. The app stores the device's time zone with its push subscription. Permission is requested only while it is in the default state; granted/denied permission is not prompted again. To disable, tap **Disable reminder** in Settings.
 
-To test delivery, enable the reminder before 8:00 PM local time, close the PWA, and wait for the notification. Tap it to open `/today`. Android must allow notifications for the installed PWA, and the device must have network access. Supabase Cron checks at one-minute intervals and push delivery can be delayed by the network or Android/browser power management.
+To test delivery, enable the reminder before 9:45 PM local time, close the PWA, and wait for the notification. Tap it to open `/today`. Android must allow notifications for the installed PWA, and the device must have network access. Supabase Cron checks at one-minute intervals and push delivery can be delayed by the network or Android/browser power management.
