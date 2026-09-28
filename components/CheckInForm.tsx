@@ -158,7 +158,6 @@ export default function CheckInForm({ date, existing, onSave }: Props) {
               </label>
             );
           })}
-          <p className="text-xs text-neutral-400 mt-2">Avoid added/free sugars; whole fruit and plain milk are okay.</p>
         </div>
       </Section>
 
