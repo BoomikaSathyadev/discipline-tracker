@@ -43,7 +43,7 @@ export default function DailyNotificationSetting() {
 
   const unavailable = state === 'unsupported' || state === 'denied';
   const status = state === 'enabled'
-    ? 'Scheduled daily for 8:00 PM local time.'
+    ? ''
     : state === 'denied'
       ? 'Notifications are blocked. Allow them in Android app settings to enable this reminder.'
       : state === 'unsupported'
@@ -65,7 +65,7 @@ export default function DailyNotificationSetting() {
         style={{ background: '#f7f7f5', color: '#1a1a1a', border: '1px solid #e5e5e3' }}>
         {busy ? 'Updating…' : state === 'enabled' ? 'Disable reminder' : 'Enable reminder'}
       </button>
-      <p role="status" className="text-xs text-neutral-500">{status}</p>
+      {status && <p role="status" className="text-xs text-neutral-500">{status}</p>}
     </div>
   );
 }
