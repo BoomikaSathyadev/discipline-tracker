@@ -19,7 +19,6 @@ export default function HistoryEntry({ entry, onEdit, onDelete, compact = false 
           <div className="flex flex-wrap gap-x-3 mt-0.5">
             <span className="text-xs text-neutral-400">{entry.learningMinutes}m study</span>
             <span className="text-xs text-neutral-400">{entry.steps.toLocaleString()} steps</span>
-            <span className="text-xs text-neutral-400">{formatMinutes(entry.screenTime.socialMediaMinutes)} social</span>
             <span className="text-xs text-neutral-400">{entry.dayRating}/10</span>
           </div>
         </div>
@@ -35,7 +34,6 @@ export default function HistoryEntry({ entry, onEdit, onDelete, compact = false 
     ['Sleep', `${entry.sleep.durationHours}h`],
     ['Steps', entry.steps.toLocaleString()],
     ['Study', `${entry.learningMinutes} min`],
-    ['Social media', formatMinutes(entry.screenTime.socialMediaMinutes)],
     ['Screen time', formatMinutes(entry.screenTime.totalMinutes)],
     ['Exercise', entry.exerciseLevel === 'faceYoga' ? 'Face Yoga' : entry.exerciseLevel === 'workout' ? 'Workout' : entry.exerciseLevel === 'fullExercise' || entry.exercise ? 'Full Exercise' : 'No'],
   ];
