@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { DailyEntry } from '@/lib/types';
 import { getAllEntries } from '@/lib/storage';
 import { calculateStreaks } from '@/lib/streaks';
-import { ScoreChart, LearningChart, SocialMediaChart } from '@/components/Charts';
+import { ScoreChart, LearningChart, ScreenTimeChart } from '@/components/Charts';
 
 function avg(nums: number[]) {
   if (!nums.length) return 0;
@@ -89,7 +89,7 @@ export default function ProgressPage() {
 
           <ScoreChart entries={entries} days={range} />
           <LearningChart entries={entries} days={range} />
-          <SocialMediaChart entries={entries} days={range} />
+          <ScreenTimeChart entries={entries} days={range} />
         </div>
       )}
     </div>

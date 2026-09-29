@@ -53,6 +53,6 @@ export function ScoreChart({ entries, days = 7 }: Props) {
 export function LearningChart({ entries, days = 7 }: Props) {
   return <ChartCard title={`Study time — last ${days} days`}><Chart data={buildData(entries, days, e => e.learningMinutes)} unit=" min" /></ChartCard>;
 }
-export function SocialMediaChart({ entries, days = 7 }: Props) {
-  return <ChartCard title={`Social media — last ${days} days`}><Chart data={buildData(entries, days, e => e.screenTime.socialMediaMinutes)} unit="m" /></ChartCard>;
+export function ScreenTimeChart({ entries, days = 7 }: Props) {
+  return <ChartCard title={`Screen time — last ${days} days`}><Chart data={buildData(entries, days, e => e.screenTime.totalMinutes)} unit="m" /></ChartCard>;
 }
