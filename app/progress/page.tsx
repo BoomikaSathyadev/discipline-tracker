@@ -82,7 +82,7 @@ export default function ProgressPage() {
             <StatCard label="Avg Study" value={stats.avgStudy} unit="min" />
             <StatCard label="Avg Steps" value={stats.avgSteps.toLocaleString()} />
             <StatCard label="Avg Sleep" value={stats.avgSleep} unit="h" />
-            <StatCard label="Entries" value={recent.length} />
+            <div className="col-span-2"><StatCard label="Entries" value={recent.length} /></div>
           </div>
 
           <ScoreChart entries={entries} days={range} />
