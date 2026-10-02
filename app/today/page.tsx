@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { DailyEntry } from '@/lib/types';
 import { getAllEntries, saveEntry } from '@/lib/storage';
 import { calculateStreaks } from '@/lib/streaks';
-import { toLocalDateString, formatDisplayDate, formatMinutes } from '@/lib/utils';
+import { toLocalDateString, formatDisplayDate } from '@/lib/utils';
 import CheckInForm from '@/components/CheckInForm';
 import ScoreDisplay from '@/components/ScoreDisplay';
 
@@ -62,7 +62,6 @@ export default function TodayPage() {
                 <div className="grid grid-cols-2 gap-y-2 gap-x-4">
                   <Stat icon="study" label="Study" value={`${existing.learningMinutes}m`} />
                   <Stat icon="steps" label="Steps" value={existing.steps.toLocaleString()} />
-                  <Stat icon="social" label="Social" value={formatMinutes(existing.screenTime.socialMediaMinutes)} />
                   <Stat icon="rating" label="Rating" value={`${existing.dayRating}/10`} />
                 </div>
                 <button onClick={() => setEditing(true)}
@@ -101,7 +100,6 @@ export default function TodayPage() {
 const icons = {
   study: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><path d="M4 19V6a2 2 0 0 1 2-2h13"/><path d="M4 19a2 2 0 0 0 2 2h13V8H6a2 2 0 0 0-2 2"/></svg>,
   steps: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><path d="M3 12h18M3 6h18M3 18h18"/></svg>,
-  social: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>,
   rating: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><path d="M12 20V4M5 11l7-7 7 7"/></svg>,
 };
 

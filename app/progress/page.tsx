@@ -37,7 +37,6 @@ export default function ProgressPage() {
     avgScore: avg(recent.map(e => e.disciplineScore)),
     avgStudy: avg(recent.map(e => e.learningMinutes)),
     avgSteps: avg(recent.map(e => e.steps)),
-    avgSM: avg(recent.map(e => e.screenTime.socialMediaMinutes)),
     avgSleep: avg(recent.map(e => e.sleep.durationHours)),
   };
 
@@ -82,7 +81,6 @@ export default function ProgressPage() {
             <StatCard label="Avg Score" value={stats.avgScore} unit="/ 100" />
             <StatCard label="Avg Study" value={stats.avgStudy} unit="min" />
             <StatCard label="Avg Steps" value={stats.avgSteps.toLocaleString()} />
-            <StatCard label="Avg Social Media" value={stats.avgSM} unit="min" />
             <StatCard label="Avg Sleep" value={stats.avgSleep} unit="h" />
             <StatCard label="Entries" value={recent.length} />
           </div>

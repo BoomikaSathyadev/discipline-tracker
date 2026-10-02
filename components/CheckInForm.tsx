@@ -16,7 +16,7 @@ function blank(date: string): PartialEntry {
   return {
     date,
     sleep: { bedtime: '00:00', wakeTime: '00:00', durationHours: 0 },
-    screenTime: { totalMinutes: 0, socialMediaMinutes: 0 },
+    screenTime: { totalMinutes: 0 },
     steps: 0, exercise: false, exerciseLevel: 'none', learningMinutes: 0, learningTopic: '',
     habits: { wokeUpOnTime: false, completedMainTask: false, keptOrganized: false, limitedSocialMedia: false, followedRoutine: false, readBook: false, drankWater: false, noAddedSugar: false },
     mood: 0, dayRating: 0, note: '',

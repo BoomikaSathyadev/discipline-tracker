@@ -6,7 +6,8 @@ export interface SleepData {
 
 export interface ScreenTimeData {
   totalMinutes: number;
-  socialMediaMinutes: number;
+  /** Legacy database value retained only when updating historical entries. */
+  legacySocialMediaMinutes?: number | null;
 }
 
 export interface HabitsData {

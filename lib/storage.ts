@@ -12,7 +12,7 @@ function rowToEntry(row: Record<string, unknown>): DailyEntry {
     },
     screenTime: {
       totalMinutes: row.screen_total_minutes as number,
-      socialMediaMinutes: row.screen_social_minutes as number,
+      legacySocialMediaMinutes: row.screen_social_minutes as number | null,
     },
     steps: row.steps as number,
     exercise: row.exercise as boolean,
@@ -46,7 +46,9 @@ function entryToRow(entry: DailyEntry) {
     sleep_wake_time: entry.sleep.wakeTime,
     sleep_duration_hours: entry.sleep.durationHours,
     screen_total_minutes: entry.screenTime.totalMinutes,
-    screen_social_minutes: entry.screenTime.socialMediaMinutes,
+    ...(entry.screenTime.legacySocialMediaMinutes !== undefined
+      ? { screen_social_minutes: entry.screenTime.legacySocialMediaMinutes }
+      : {}),
     steps: entry.steps,
     exercise: entry.exercise,
     exercise_level: entry.exerciseLevel ?? (entry.exercise ? 'fullExercise' : 'none'),
@@ -85,7 +87,7 @@ export async function saveEntry(entry: DailyEntry): Promise<void> {
   if (!user) return;
   await supabase
     .from('discipline_entries')
-    .upsert({ ...entryToRow(entry), user_id: user.id }, { onConflict: 'user_id,date' });
+    .upsert({ ...entryToRow(entry), user_id: user.id }, { onConflict: 'user_id,date', defaultToNull: false });
 }
 
 export async function deleteEntry(date: string): Promise<void> {
