@@ -1,9 +1,10 @@
 import { createClient } from './supabase';
 import { DailyEntry } from './types';
+import { calculateScore } from './scoring';
 
 // Map a Supabase DB row → DailyEntry
 function rowToEntry(row: Record<string, unknown>): DailyEntry {
-  return {
+  const entry: DailyEntry = {
     date: row.date as string,
     sleep: {
       bedtime: row.sleep_bedtime as string,
@@ -41,6 +42,8 @@ function rowToEntry(row: Record<string, unknown>): DailyEntry {
     createdAt: row.created_at as string,
     updatedAt: row.updated_at as string,
   };
+  entry.disciplineScore = calculateScore(entry).total;
+  return entry;
 }
 
 // Map a DailyEntry → Supabase DB row (without user_id, added by each function)
