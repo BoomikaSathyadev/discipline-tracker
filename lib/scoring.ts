@@ -45,8 +45,12 @@ export function calculateScore(entry: PartialEntry): ScoreBreakdown {
   const sleepPts = h >= 7 && h <= 9 ? 15 : h >= 6 && h < 7 ? 10 : h > 9 && h <= 10 ? 10 : h >= 5 ? 5 : 0;
   items.push({ label: 'Sleep quality (7–9 h)', earned: sleepPts, max: 15 });
 
-  // Steps (15 pts) — full points for 8000+ steps
-  const stepPts = Math.min(15, Math.round((entry.steps / 8000) * 15));
+  // Step goals (15 pts) — gradual score at each daily target.
+  const stepPts = entry.steps >= 8000 ? 15
+    : entry.steps >= 6000 ? 12
+      : entry.steps >= 4000 ? 8
+        : entry.steps >= 2000 ? 4
+          : 0;
   items.push({ label: 'Steps (goal: 8 000)', earned: stepPts, max: 15 });
 
   const total = items.reduce((sum, i) => sum + i.earned, 0);
