@@ -17,7 +17,7 @@ function blank(date: string): PartialEntry {
     date,
     sleep: { bedtime: '00:00', wakeTime: '00:00', durationHours: 0 },
     screenTime: { totalMinutes: 0 },
-    steps: 0, exercise: false, exerciseLevel: 'none', learningMinutes: 0, learningTopic: '',
+    steps: 0, exercise: false, exerciseLevel: 'none', exerciseSelections: [], learningMinutes: 0, learningTopic: '',
     habits: { wokeUpOnTime: false, completedMainTask: false, keptOrganized: false, limitedSocialMedia: false, followedRoutine: false, readBook: false, drankWater: false, noAddedSugar: false },
     mood: 0, dayRating: 0, note: '',
   };
@@ -110,12 +110,14 @@ export default function CheckInForm({ date, existing, onSave }: Props) {
               {([
                 ['faceYoga', 'Face Yoga'],
                 ['workout', 'Workout'],
-                ['fullExercise', 'Full Exercise'],
+                ['zumba', 'Zumba'],
               ] as const).map(([level, label]) => {
-                const selected = (form.exerciseLevel ?? (form.exercise ? 'fullExercise' : 'none')) === level;
+                const selected = form.exerciseSelections.includes(level);
                 return (
                   <button key={level} type="button"
-                    onClick={() => { const exerciseLevel = selected ? 'none' : level; set('exerciseLevel', exerciseLevel); set('exercise', exerciseLevel !== 'none'); }}
+                    onClick={() => set('exerciseSelections', selected
+                      ? form.exerciseSelections.filter(selection => selection !== level)
+                      : [...form.exerciseSelections, level])}
                     aria-pressed={selected}
                     className="flex-1 transition-colors"
                     style={{ padding: '8px 10px', borderRadius: 10, fontSize: 13, fontWeight: 600, cursor: 'pointer', background: selected ? '#1a1a1a' : '#fff', color: selected ? '#fff' : '#737373', border: `1.5px solid ${selected ? '#1a1a1a' : '#e5e5e3'}` }}>
@@ -124,6 +126,9 @@ export default function CheckInForm({ date, existing, onSave }: Props) {
                 );
               })}
             </div>
+            {form.exerciseLevel === 'fullExercise' && (
+              <p className="mt-1.5 text-xs text-neutral-400">Legacy record: Full Exercise</p>
+            )}
           </Field>
         </div>
       </Section>

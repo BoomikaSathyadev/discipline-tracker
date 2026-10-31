@@ -10,6 +10,11 @@ interface Props {
 }
 
 export default function HistoryEntry({ entry, onEdit, onDelete, compact = false }: Props) {
+  const exerciseSummary = [
+    ...entry.exerciseSelections.map(selection => ({ faceYoga: 'Face Yoga', workout: 'Workout', zumba: 'Zumba' })[selection]),
+    ...(entry.exerciseLevel === 'fullExercise' || (!entry.exerciseLevel && entry.exercise) ? ['Full Exercise (legacy)'] : []),
+  ].join(', ') || 'No';
+
   if (compact) {
     return (
       <div className="bg-white rounded-2xl flex items-center gap-3 px-4 py-3" style={{ border: '1px solid #e5e5e3' }}>
@@ -19,6 +24,7 @@ export default function HistoryEntry({ entry, onEdit, onDelete, compact = false 
           <div className="flex flex-wrap gap-x-3 mt-0.5">
             <span className="text-xs text-neutral-400">{entry.learningMinutes}m study</span>
             <span className="text-xs text-neutral-400">{entry.steps.toLocaleString()} steps</span>
+            {exerciseSummary !== 'No' && <span className="text-xs text-neutral-400">{exerciseSummary}</span>}
             <span className="text-xs text-neutral-400">{entry.dayRating}/10</span>
           </div>
         </div>
@@ -35,7 +41,7 @@ export default function HistoryEntry({ entry, onEdit, onDelete, compact = false 
     ['Steps', entry.steps.toLocaleString()],
     ['Study', `${entry.learningMinutes} min`],
     ['Screen time', formatMinutes(entry.screenTime.totalMinutes)],
-    ['Exercise', entry.exerciseLevel === 'faceYoga' ? 'Face Yoga' : entry.exerciseLevel === 'workout' ? 'Workout' : entry.exerciseLevel === 'fullExercise' || entry.exercise ? 'Full Exercise' : 'No'],
+    ['Exercise', exerciseSummary],
   ];
 
   return (

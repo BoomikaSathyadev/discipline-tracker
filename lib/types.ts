@@ -22,6 +22,7 @@ export interface HabitsData {
 }
 
 export type ExerciseLevel = 'none' | 'faceYoga' | 'workout' | 'fullExercise';
+export type ExerciseSelection = 'faceYoga' | 'workout' | 'zumba';
 
 export interface DailyEntry {
   date: string; // YYYY-MM-DD
@@ -30,6 +31,7 @@ export interface DailyEntry {
   steps: number;
   exercise: boolean;
   exerciseLevel?: ExerciseLevel;
+  exerciseSelections: ExerciseSelection[];
   learningMinutes: number;
   learningTopic: string;
   habits: HabitsData;
