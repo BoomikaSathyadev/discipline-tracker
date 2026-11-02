@@ -36,8 +36,10 @@ export function calculateScore(entry: PartialEntry): ScoreBreakdown {
         : `Exercise (legacy ${exerciseLabels[legacyExerciseLevel]})`;
   items.push({ label: exerciseLabel, earned: exercisePoints, max: 13 });
 
-  // Learning (15 pts) — full points for 30+ min
-  const learnPts = Math.min(15, Math.round((entry.learningMinutes / 30) * 15));
+  // Learning (15 pts) — 1 point per 8 min, rounded up, capped at 15
+  const learnPts = entry.learningMinutes > 0
+    ? Math.min(15, Math.ceil(entry.learningMinutes / 8))
+    : 0;
   items.push({ label: 'Learning / study time', earned: learnPts, max: 15 });
 
   // Sleep (15 pts) — full points for 7–9 h
