@@ -22,7 +22,7 @@ export interface HabitsData {
 }
 
 export type ExerciseLevel = 'none' | 'faceYoga' | 'workout' | 'fullExercise';
-export type ExerciseSelection = 'faceYoga' | 'workout' | 'zumba';
+export type ExerciseSelection = 'faceYoga' | 'workout';
 
 export interface DailyEntry {
   date: string; // YYYY-MM-DD

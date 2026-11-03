@@ -21,7 +21,6 @@ function rowToEntry(row: Record<string, unknown>): DailyEntry {
     exerciseSelections: [
       ...(row.exercise_face_yoga ? ['faceYoga' as const] : []),
       ...(row.exercise_workout ? ['workout' as const] : []),
-      ...(row.exercise_zumba ? ['zumba' as const] : []),
     ],
     learningMinutes: row.learning_minutes as number,
     learningTopic: row.learning_topic as string,
@@ -62,7 +61,6 @@ function entryToRow(entry: DailyEntry) {
     exercise_level: entry.exerciseLevel ?? (entry.exercise ? 'fullExercise' : 'none'),
     exercise_face_yoga: entry.exerciseSelections.includes('faceYoga'),
     exercise_workout: entry.exerciseSelections.includes('workout'),
-    exercise_zumba: entry.exerciseSelections.includes('zumba'),
     learning_minutes: entry.learningMinutes,
     learning_topic: entry.learningTopic,
     habit_woke_up_on_time: entry.habits.wokeUpOnTime,

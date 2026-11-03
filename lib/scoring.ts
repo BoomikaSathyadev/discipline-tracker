@@ -20,13 +20,13 @@ export function calculateScore(entry: PartialEntry): ScoreBreakdown {
   items.push({ label: 'Read a book', earned: (entry.habits.readBook ?? false) ? habitPoints : 0, max: habitPoints });
 
   // Exercise selections are independent; keep legacy single-level values readable.
-  const exercisePointsBySelection = { faceYoga: 3, workout: 5, zumba: 5 } as const;
-  const exerciseLabels = { faceYoga: 'Face Yoga', workout: 'Workout', zumba: 'Zumba' } as const;
+  const exercisePointsBySelection = { faceYoga: 5, workout: 8 } as const;
+  const exerciseLabels = { faceYoga: 'Face Yoga', workout: 'Workout' } as const;
   const exerciseSelections = entry.exerciseSelections ?? [];
   const legacyExerciseLevel = entry.exerciseLevel ?? (entry.exercise ? 'fullExercise' : 'none');
   const exercisePoints = exerciseSelections.length > 0
     ? exerciseSelections.reduce((sum, selection) => sum + exercisePointsBySelection[selection], 0)
-    : ({ none: 0, faceYoga: 5, workout: 9, fullExercise: 13 } as const)[legacyExerciseLevel];
+    : ({ none: 0, faceYoga: 5, workout: 8, fullExercise: 13 } as const)[legacyExerciseLevel];
   const exerciseLabel = exerciseSelections.length > 0
     ? `Exercise (${exerciseSelections.map(selection => exerciseLabels[selection]).join(' + ')})`
     : legacyExerciseLevel === 'fullExercise'

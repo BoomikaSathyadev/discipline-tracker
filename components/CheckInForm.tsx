@@ -110,7 +110,6 @@ export default function CheckInForm({ date, existing, onSave }: Props) {
               {([
                 ['faceYoga', 'Face Yoga'],
                 ['workout', 'Workout'],
-                ['zumba', 'Zumba'],
               ] as const).map(([level, label]) => {
                 const selected = form.exerciseSelections.includes(level);
                 return (

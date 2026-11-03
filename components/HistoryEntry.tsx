@@ -11,7 +11,7 @@ interface Props {
 
 export default function HistoryEntry({ entry, onEdit, onDelete, compact = false }: Props) {
   const exerciseSummary = [
-    ...entry.exerciseSelections.map(selection => ({ faceYoga: 'Face Yoga', workout: 'Workout', zumba: 'Zumba' })[selection]),
+    ...entry.exerciseSelections.map(selection => ({ faceYoga: 'Face Yoga', workout: 'Workout' })[selection]),
     ...(entry.exerciseLevel === 'fullExercise' || (!entry.exerciseLevel && entry.exercise) ? ['Full Exercise (legacy)'] : []),
   ].join(', ') || 'No';
 
