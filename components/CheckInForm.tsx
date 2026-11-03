@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { DailyEntry, PartialEntry } from '@/lib/types';
-import { calculateScore } from '@/lib/scoring';
+import { calculateMainTaskPoints, calculateScore } from '@/lib/scoring';
 import { calcSleepDuration, to12h, to24h } from '@/lib/utils';
 import ScoreDisplay from './ScoreDisplay';
 import ScoreBreakdownList from './ScoreBreakdownList';
@@ -25,7 +25,6 @@ function blank(date: string): PartialEntry {
 
 const habits = [
   { key: 'wokeUpOnTime' as const,      label: 'Woke up on time' },
-  { key: 'completedMainTask' as const,  label: 'Completed main task' },
   { key: 'keptOrganized' as const,      label: 'Kept surroundings organized' },
   { key: 'limitedSocialMedia' as const, label: 'Limited social media' },
   { key: 'readBook' as const,           label: 'Read a book' },
@@ -48,6 +47,7 @@ export default function CheckInForm({ date, existing, onSave }: Props) {
   }, [form.sleep.bedtime, form.sleep.wakeTime]);
 
   const breakdown = calculateScore(form);
+  const mainTaskPoints = calculateMainTaskPoints(form.learningMinutes);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -143,6 +143,10 @@ export default function CheckInForm({ date, existing, onSave }: Props) {
       {/* Habits */}
       <Section label="Habits">
         <div className="space-y-1.5">
+          <div className="flex items-center justify-between cursor-default" style={{ padding: '10px 12px', borderRadius: 10, background: mainTaskPoints > 0 ? '#f5f5f5' : '#fafaf9', border: `1.5px solid ${mainTaskPoints > 0 ? '#d4d4d0' : '#e5e5e3'}` }}>
+            <span style={{ fontSize: 14, color: '#737373', fontWeight: 500 }}>Completed main task</span>
+            <span style={{ fontSize: 14, color: '#737373', fontWeight: 600 }}>{mainTaskPoints}/7</span>
+          </div>
           {habits.map(h => {
             const on = form.habits[h.key] ?? false;
             return (
