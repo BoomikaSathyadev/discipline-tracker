@@ -5,23 +5,14 @@ export interface ScoreBreakdown {
   items: { label: string; earned: number; max: number }[];
 }
 
-export const MAX_SCORE = 100;
-
-export function calculateMainTaskPoints(studyMinutes: number): number {
-  if (studyMinutes >= 120) return 7;
-  if (studyMinutes >= 60) return 5;
-  if (studyMinutes >= 30) return 3;
-  if (studyMinutes >= 1) return 1;
-  return 0;
-}
+export const MAX_SCORE = 93;
 
 export function calculateScore(entry: PartialEntry): ScoreBreakdown {
   const items: { label: string; earned: number; max: number }[] = [];
 
-  // Habits (6 × 7 = 42 pts)
+  // Habits (5 × 7 = 35 pts)
   const habitPoints = 7;
   items.push({ label: 'Woke up on time', earned: entry.habits.wokeUpOnTime ? habitPoints : 0, max: habitPoints });
-  items.push({ label: 'Completed main task', earned: calculateMainTaskPoints(entry.learningMinutes), max: habitPoints });
   items.push({ label: 'Kept surroundings organized', earned: entry.habits.keptOrganized ? habitPoints : 0, max: habitPoints });
   items.push({ label: 'Limited social media', earned: entry.habits.limitedSocialMedia ? habitPoints : 0, max: habitPoints });
   items.push({ label: 'Followed planned routine', earned: entry.habits.followedRoutine ? habitPoints : 0, max: habitPoints });

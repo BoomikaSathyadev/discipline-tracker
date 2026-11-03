@@ -26,7 +26,6 @@ function rowToEntry(row: Record<string, unknown>): DailyEntry {
     learningTopic: row.learning_topic as string,
     habits: {
       wokeUpOnTime: row.habit_woke_up_on_time as boolean,
-      completedMainTask: row.habit_completed_main_task as boolean,
       keptOrganized: row.habit_kept_organized as boolean,
       limitedSocialMedia: row.habit_limited_social_media as boolean,
       followedRoutine: row.habit_followed_routine as boolean,
@@ -64,7 +63,6 @@ function entryToRow(entry: DailyEntry) {
     learning_minutes: entry.learningMinutes,
     learning_topic: entry.learningTopic,
     habit_woke_up_on_time: entry.habits.wokeUpOnTime,
-    habit_completed_main_task: entry.habits.completedMainTask,
     habit_kept_organized: entry.habits.keptOrganized,
     habit_limited_social_media: entry.habits.limitedSocialMedia,
     habit_followed_routine: entry.habits.followedRoutine,

@@ -12,7 +12,6 @@ export interface ScreenTimeData {
 
 export interface HabitsData {
   wokeUpOnTime: boolean;
-  completedMainTask: boolean;
   keptOrganized: boolean;
   limitedSocialMedia: boolean;
   followedRoutine: boolean;
