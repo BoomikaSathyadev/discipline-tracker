@@ -5,7 +5,7 @@ export interface ScoreBreakdown {
   items: { label: string; earned: number; max: number }[];
 }
 
-export const MAX_SCORE = 93;
+export const MAX_SCORE = 100;
 
 export function calculateScore(entry: PartialEntry): ScoreBreakdown {
   const items: { label: string; earned: number; max: number }[] = [];
@@ -17,15 +17,16 @@ export function calculateScore(entry: PartialEntry): ScoreBreakdown {
   items.push({ label: 'Limited social media', earned: entry.habits.limitedSocialMedia ? habitPoints : 0, max: habitPoints });
   items.push({ label: 'Followed planned routine', earned: entry.habits.followedRoutine ? habitPoints : 0, max: habitPoints });
   items.push({ label: 'Read a book', earned: (entry.habits.readBook ?? false) ? habitPoints : 0, max: habitPoints });
+  items.push({ label: 'Water Intake', earned: entry.habits.drankWater ? 5 : 0, max: 5 });
 
   // Exercise selections are independent; keep legacy single-level values readable.
-  const exercisePointsBySelection = { faceYoga: 5, workout: 8 } as const;
+  const exercisePointsBySelection = { faceYoga: 5, workout: 10 } as const;
   const exerciseLabels = { faceYoga: 'Face Yoga', workout: 'Workout' } as const;
   const exerciseSelections = entry.exerciseSelections ?? [];
   const legacyExerciseLevel = entry.exerciseLevel ?? (entry.exercise ? 'fullExercise' : 'none');
   const exercisePoints = exerciseSelections.length > 0
-    ? exerciseSelections.reduce((sum, selection) => sum + exercisePointsBySelection[selection], 0)
-    : ({ none: 0, faceYoga: 5, workout: 8, fullExercise: 13 } as const)[legacyExerciseLevel];
+    ? Math.min(15, exerciseSelections.reduce((sum, selection) => sum + exercisePointsBySelection[selection], 0))
+    : ({ none: 0, faceYoga: 5, workout: 10, fullExercise: 15 } as const)[legacyExerciseLevel];
   const exerciseLabel = exerciseSelections.length > 0
     ? `Exercise (${exerciseSelections.map(selection => exerciseLabels[selection]).join(' + ')})`
     : legacyExerciseLevel === 'fullExercise'
@@ -33,7 +34,7 @@ export function calculateScore(entry: PartialEntry): ScoreBreakdown {
       : legacyExerciseLevel === 'none'
         ? 'Exercise'
         : `Exercise (legacy ${exerciseLabels[legacyExerciseLevel]})`;
-  items.push({ label: exerciseLabel, earned: exercisePoints, max: 13 });
+  items.push({ label: exerciseLabel, earned: exercisePoints, max: 15 });
 
   // Learning (15 pts) — 1 point per 8 min, rounded up, capped at 15
   const learnPts = entry.learningMinutes > 0

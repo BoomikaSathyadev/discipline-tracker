@@ -12,8 +12,7 @@ where exercise_level = 'faceYoga'
   and not exercise_workout;
 
 update public.discipline_entries
-set exercise_face_yoga = true,
-    exercise_workout = true
+set exercise_workout = true
 where exercise_level = 'workout'
   and not exercise_face_yoga
   and not exercise_workout;
