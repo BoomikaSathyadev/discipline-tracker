@@ -28,7 +28,7 @@ export function calculateScore(entry: PartialEntry): ScoreBreakdown {
     ? Math.min(15, exerciseSelections.reduce((sum, selection) => sum + exercisePointsBySelection[selection], 0))
     : ({ none: 0, faceYoga: 5, workout: 10, fullExercise: 15 } as const)[legacyExerciseLevel];
   const exerciseLabel = exerciseSelections.length > 0
-    ? `Exercise (${exerciseSelections.map(selection => exerciseLabels[selection]).join(' + ')})`
+    ? 'Exercise'
     : legacyExerciseLevel === 'fullExercise'
       ? 'Exercise (legacy Full Exercise)'
       : legacyExerciseLevel === 'none'
